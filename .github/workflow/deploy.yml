@@ -1,0 +1,76 @@
+name: Deploy Arithmetic Calculator Solution
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: rootpassword
+          MYSQL_DATABASE: calculator
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin123
+
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        
+        volumes:
+          - mysql-data:/var/lib/mysql
+
+    steps:
+     - name: Cache MySQL Data
+        id: cache-mysql-data
+        uses: actions/cache@v2
+        with:
+          path: /var/lib/mysql
+          key: mysql-data-${{ github.run_id }}
+          restore-keys: |
+            mysql-data-
+            
+      - name: Checkout Spring Boot Repository
+        uses: actions/checkout@v2
+        with:
+          repository: encouver/calculator-api
+          path: calculator-api
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build Spring Boot Application
+        run: |
+          ./mvnw clean install
+
+      - name: Install and Build React Application
+        run: |
+          cd calculator-ui
+          npm install
+          npm run build
+
+      - name: Deploy Spring Boot Application
+        run: |
+          cd calculator-api
+          java -jar target/calculator-1.0.0.jar &
+
+     - name: Trigger React Deployment
+       run: |
+         curl -X POST -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+         -H "Accept: application/vnd.github.v3+json" \
+         https://api.github.com/repos/your-username/react-repo/dispatches \
+         -d '{"event_type":"deploy"}'
+          
+volumes:
+  mysql-data:
