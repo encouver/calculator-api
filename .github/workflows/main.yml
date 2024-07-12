@@ -71,6 +71,3 @@ jobs:
          -H "Accept: application/vnd.github.v3+json" \
          https://api.github.com/repos/encouver/calculator-ui/dispatches \
          -d '{"event_type":"deploy"}'
-          
-volumes:
-  mysql-data:
