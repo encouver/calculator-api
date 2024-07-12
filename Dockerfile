@@ -4,7 +4,7 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17
+FROM openjdk:17-jdk-slim
 VOLUME /tmp
-COPY target/calculator-1.0.0.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
