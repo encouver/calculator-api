@@ -21,7 +21,7 @@ public class JwtUtil {
 
     public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60;
 
-    @Value("${JWT_SECRET}")
+    @Value("${JWT_SECRET_L}")
     private String secret;
 
     public String generateToken(UserDetails userDetails) {

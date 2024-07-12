@@ -17,8 +17,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: rootpassword
           MYSQL_DATABASE: calculator
-          MYSQL_USER: admin
-          MYSQL_PASSWORD: admin123
+          MYSQL_USER: ${{ secrets.DB_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
         options: >-
           --health-cmd="mysqladmin ping --silent"
@@ -60,6 +60,11 @@ jobs:
           mvn clean install
 
      - name: Deploy Spring Boot Application
+       env:
+         SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/calculator
+         SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
+         SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+         JWT_SECRET: ${{ secrets.JWT_SECRET }}
        run: |
           java -jar target/calculator-1.0.0.jar &
 

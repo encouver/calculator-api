@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: calculator-api
+    env: docker
+    repo: https://github.com/encouver/calculator-api
+    branch: main
+    dockerfilePath: Dockerfile
+    buildCommand: "mvn clean package"
+    startCommand: "java -jar /app.jar"
+    plan: free
+    healthCheckPath: "/actuator/health"
+    autoDeploy: true

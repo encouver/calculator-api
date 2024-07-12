@@ -31,7 +31,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
 
-    @Value("${JWT_SECRET}")
+    @Value("${JWT_SECRET_L}")
     private String secret;
 
     public JWTAuthorizationFilter(AuthenticationManager authManager, JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsServiceImpl) {
