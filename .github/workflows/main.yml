@@ -59,15 +59,8 @@ jobs:
        run: |
           mvn clean install
 
-     - name: Install and Build React Application
-       run: |
-          cd calculator-ui
-          npm install
-          npm run build
-
      - name: Deploy Spring Boot Application
        run: |
-          cd calculator-api
           java -jar target/calculator-1.0.0.jar &
 
      - name: Trigger React Deployment
