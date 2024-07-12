@@ -67,6 +67,7 @@ public class OperationService {
         return result;
     }
 
+    @Transactional
     public OperationResultDTO multiply(OperationDTO operationDTO) throws  Exception {
         Optional<Operation> operation = operationRepository.findByType(OperationTypesEnum.multiplication);
         if (operation.isEmpty()) {
@@ -95,6 +96,7 @@ public class OperationService {
         return result;
     }
 
+    @Transactional
     public OperationResultDTO subtract(OperationDTO operationDTO) throws Exception {
         Optional<Operation> operation = operationRepository.findByType(OperationTypesEnum.subtraction);
         if (operation.isEmpty()) {
@@ -122,6 +124,7 @@ public class OperationService {
         return result;
     }
 
+    @Transactional
     public OperationResultDTO divide(OperationDTO operationDTO) throws Exception {
         Optional<Operation> operation = operationRepository.findByType(OperationTypesEnum.division);
         if (operation.isEmpty()) {
@@ -164,6 +167,7 @@ public class OperationService {
 
     }
 
+    @Transactional
     public OperationResultDTO squareRoot(OperationDTO operationDTO) throws Exception {
         Optional<Operation> operation = operationRepository.findByType(OperationTypesEnum.square_root);
         if (operation.isEmpty()) {
@@ -200,6 +204,7 @@ public class OperationService {
         return result;
     }
 
+    @Transactional
     public OperationResultDTO randomString(OperationDTO operationDTO) throws Exception {
         Optional<Operation> operation = operationRepository.findByType(OperationTypesEnum.random_string);
         if (operation.isEmpty()) {
