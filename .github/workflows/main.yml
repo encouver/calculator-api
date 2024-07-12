@@ -43,7 +43,6 @@ jobs:
        uses: actions/checkout@v2
        with:
           repository: encouver/calculator-api
-          path: calculator-api
 
      - name: Set up JDK 17
        uses: actions/setup-java@v2
